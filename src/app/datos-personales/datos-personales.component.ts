@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-datos-personales',
@@ -21,7 +22,7 @@ export class DatosPersonalesComponent implements OnInit {
     genero: new FormControl('', Validators.required),
     email: new FormControl('', [Validators.required, this.validarDominioMail]),
     telefono: new FormControl(''),
-    apodo: new FormControl('')
+    apodo: new FormControl('', [], [this.validarApodo])
   });
 
   constructor() { }
@@ -41,5 +42,16 @@ export class DatosPersonalesComponent implements OnInit {
 
   validarDominioMail(control: FormControl): { [s: string]: boolean } {
     return control.value.includes("@gmail") ? null : { nogmail: true };
+  }
+
+  validarApodo(control: FormControl): Promise<any> | Observable<any> {
+
+    let promesa = new Promise((resolve, reject) => {
+      setTimeout(
+        () => control.value !== "tonto" ? resolve(null) : resolve({ apodoInvalido: true }), 2000
+      )
+    });
+
+    return promesa;
   }
 }
