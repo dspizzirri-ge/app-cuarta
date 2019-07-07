@@ -12,7 +12,7 @@ export class DatosPersonalesComponent implements OnInit {
   generos: Array<any> = [
     { id: 1, descripcion: "Masculino" },
     { id: 2, descripcion: "Femenino" },
-    { id: 3, descripcion: "Otro" },
+    { id: 3, descripcion: "Otro" }
   ]
 
   curriculumForm: FormGroup = new FormGroup({
@@ -21,7 +21,7 @@ export class DatosPersonalesComponent implements OnInit {
     dni: new FormControl('', [Validators.required, Validators.minLength(8), Validators.maxLength(9)]),
     genero: new FormControl('', Validators.required),
     email: new FormControl('', [Validators.required, this.validarDominioMail]),
-    telefono: new FormControl(''),
+    telefono: new FormControl('', Validators.pattern("[0-9]{7,10}")),
     apodo: new FormControl('', [], [this.validarApodo])
   });
 
