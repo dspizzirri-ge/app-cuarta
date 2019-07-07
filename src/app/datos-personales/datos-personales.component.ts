@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormControl, FormGroup, Validators, FormArray } from '@angular/forms';
 import { Observable } from 'rxjs';
 
 @Component({
@@ -15,6 +15,11 @@ export class DatosPersonalesComponent implements OnInit {
     { id: 3, descripcion: "Otro" }
   ]
 
+  estados: Array<any> = [
+    { id: 1, descripcion: "En Curso" },
+    { id: 2, descripcion: "Terminado" }
+  ]
+
   curriculumForm: FormGroup = new FormGroup({
     nombre: new FormControl('', Validators.required),
     apellido: new FormControl('', Validators.required),
@@ -22,7 +27,9 @@ export class DatosPersonalesComponent implements OnInit {
     genero: new FormControl('', Validators.required),
     email: new FormControl('', [Validators.required, this.validarDominioMail]),
     telefono: new FormControl('', Validators.pattern("[0-9]{7,10}")),
-    apodo: new FormControl('', [], [this.validarApodo])
+    apodo: new FormControl('', [], [this.validarApodo]),
+    educacion: new FormArray([]),
+    experiencia: new FormArray([])
   });
 
   constructor() { }
@@ -36,9 +43,42 @@ export class DatosPersonalesComponent implements OnInit {
 
   limpiarCampos() {
     this.curriculumForm.reset({
-      nombre: '', apellido: '', dni: '', genero: '', email: '', telefono: '', apodo: ''
+      nombre: '', apellido: '', dni: '', genero: '', email: '', telefono: '', apodo: '', educacion: [], experiencia: []
     });
   }
+
+  agregarEducacion() {
+    (<FormArray>this.curriculumForm.controls['educacion']).push(
+      new FormGroup({
+        anio: new FormControl('', Validators.required),
+        institucion: new FormControl('', Validators.required),
+        carrera: new FormControl('', Validators.required),
+        estado: new FormControl('', Validators.required)
+      })
+    );
+  }
+
+  eliminarEducacion() {
+    const length = (<FormArray>this.curriculumForm.controls['educacion']).length;
+    (<FormArray>this.curriculumForm.controls['educacion']).removeAt(length - 1);
+  }
+
+  agregarExperiencia() {
+    (<FormArray>this.curriculumForm.controls['experiencia']).push(
+      new FormGroup({
+        anio: new FormControl('', Validators.required),
+        institucion: new FormControl('', Validators.required),
+        puesto: new FormControl('', Validators.required),
+        descripcion: new FormControl('', Validators.required)
+      })
+    );
+  }
+
+  eliminarExperiencia() {
+    const length = (<FormArray>this.curriculumForm.controls['experiencia']).length;
+    (<FormArray>this.curriculumForm.controls['experiencia']).removeAt(length - 1);
+  }
+
 
   validarDominioMail(control: FormControl): { [s: string]: boolean } {
     return control.value.includes("@gmail") ? null : { nogmail: true };

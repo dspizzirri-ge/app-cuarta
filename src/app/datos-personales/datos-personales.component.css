@@ -1,0 +1,18 @@
+.formulario{
+    border-radius: 10px;
+    background-color:darkseagreen;
+}
+
+.educacion{
+    border-radius: 10px;
+    background-color: antiquewhite;
+}
+
+.experiencia{
+    border-radius: 10px;
+    background-color: antiquewhite;
+}
+
+label{
+    font-weight: bold;
+}

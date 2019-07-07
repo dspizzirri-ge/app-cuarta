@@ -1,23 +1,23 @@
-<div class="container">
+<div class="container formulario">
   <h3> Curriculum </h3>
   <form [formGroup]="curriculumForm" (ngSubmit)="enviarCurriculum()">
     <div class="row">
-      <label for="nombre" class="col-2"> Nombre: </label> <input id="nombre" class="col-3" type="text"
+      <label for="nombre" class="col-2"> *Nombre: </label> <input id="nombre" class="col-3" type="text"
         formControlName="nombre">
-      <label for="apellido" class="col-2"> Apellido: </label> <input id="apellido" class="col-3" type="text"
+      <label for="apellido" class="col-2"> *Apellido: </label> <input id="apellido" class="col-3" type="text"
         formControlName="apellido">
     </div>
 
     <div class="row">
-      <label for="dni" class="col-2"> Dni: </label> <input id="dni" class="col-3" type="text" formControlName="dni">
-      <label for="genero" class="col-2"> Genero: </label>
+      <label for="dni" class="col-2"> *Dni: </label> <input id="dni" class="col-3" type="text" formControlName="dni">
+      <label for="genero" class="col-2"> *Genero: </label>
       <select class="col-3" formControlName="genero" name="genero" id="genero">
         <option *ngFor="let genero of generos" value="{{ genero.id }}"> {{ genero.descripcion }}</option>
       </select>
     </div>
 
     <div class="row">
-      <label for="email" class="col-2"> email: </label> <input id="email" class="col-3" type="text"
+      <label for="email" class="col-2"> *email: </label> <input id="email" class="col-3" type="text"
         formControlName="email">
       <label for="telefono" class="col-2"> Telefono: </label> <input id="telefono" class="col-3" type="text"
         formControlName="telefono">
@@ -27,8 +27,59 @@
       <label class="col-2"> Apodo: </label> <input class="col-3" type="text" formControlName="apodo">
     </div>
     <br>
+    <div formArrayName="educacion" class="educacion">
+      <label for="educacion" class="col-2">Educacion: </label>
+      <div id="educacion" name="educacion"
+        *ngFor="let educacion of curriculumForm.controls['educacion'].controls; let i=index">
+        <div formGroupName="{{i}}">
+          <div class="row">
+            <label for="anio-{{i}}" class="col-1"> *Anio: </label> <input id="anio-{{i}}" class="col-1" type="text"
+              formControlName="anio">
+            <label for="institucion-{{i}}" class="col-2"> *Institucion: </label> <input id="institucion-{{i}}"
+              class="col-2" type="text" formControlName="institucion">
+            <label for="carrera-{{i}}" class="col-1"> *Carrera: </label> <input id="carrera-{{i}}" class="col-2"
+              type="text" formControlName="carrera">
+          </div>
+          <div class="row">
+            <label for="estado-{{i}}" class="col-1"> *Estado: </label>
+            <select class="col-2" formControlName="estado" name="estado-{{i}}" id="estado-{{i}}">
+              <option *ngFor="let estado of estados" value="{{ estado.id }}"> {{ estado.descripcion }}</option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <button (click)="agregarEducacion()" class="col-1 btn btn-outline-primary">+</button>
+      <button *ngIf="curriculumForm.controls['educacion'].controls.length > 0" (click)="eliminarEducacion()"
+        class="col-1 btn btn-outline-danger">-</button>
+    </div>
+
+    <br>
+    <div formArrayName="experiencia" class="experiencia">
+      <label for="experiencia" class="col-2">Experiencia: </label>
+      <div id="experiencia" name="experiencia"
+        *ngFor="let experiencia of curriculumForm.controls['experiencia'].controls; let i=index">
+        <div formGroupName="{{i}}">
+          <div class="row">
+            <label for="anio-{{i}}" class="col-1"> *Anios: </label> <input id="anio-{{i}}" class="col-1" type="text"
+              formControlName="anio">
+            <label for="institucion-{{i}}" class="col-2"> *Institucion: </label> <input id="institucion-{{i}}"
+              class="col-2" type="text" formControlName="institucion">
+            <label for="puesto-{{i}}" class="col-1"> *Puesto: </label> <input id="puesto-{{i}}" class="col-2"
+              type="text" formControlName="puesto">
+          </div>
+          <label for="descripcion-{{i}}" class="col-2"> *Descripcion: </label>
+          <textarea name="descripcion-{{i}}" cols="60" rows="3" formControlName="descripcion"></textarea>
+        </div>
+      </div>
+      <button (click)="agregarExperiencia()" class="col-1 btn btn-outline-primary">+</button>
+      <button *ngIf="curriculumForm.controls['experiencia'].controls.length > 0" (click)="eliminarExperiencia()"
+        class="col-1 btn btn-outline-danger">-</button>
+    </div>
+
+    <br>
     <div class="row">
-      <button type="submit" [disabled]="!curriculumForm.valid" class="col-2 offset-1 btn btn-primary">Guardar</button>
+      <!--<button type="submit" [disabled]="!curriculumForm.valid" class="col-2 offset-1 btn btn-primary">Guardar</button>-->
+      <button type="submit" class="col-2 offset-1 btn btn-primary">Guardar</button>
       <button (click)="limpiarCampos()" class="col-2 offset-1 btn btn-danger">Borrar</button>
     </div>
 
