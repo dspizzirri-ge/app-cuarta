@@ -1,23 +1,30 @@
 <div class="container">
   <h3> Curriculum </h3>
   <form [formGroup]="curriculumForm" (ngSubmit)="enviarCurriculum()">
-    <div class="row"> 
-      <label for="nombre" class="col-1"> Nombre: </label> <input id="nombre" class="col-3" type="text" formControlName="nombre">
-      <label for="apellido" class="col-1"> Apellido: </label> <input id="apellido" class="col-3" type="text" formControlName="apellido">
+    <div class="row">
+      <label for="nombre" class="col-2"> Nombre: </label> <input id="nombre" class="col-3" type="text"
+        formControlName="nombre">
+      <label for="apellido" class="col-2"> Apellido: </label> <input id="apellido" class="col-3" type="text"
+        formControlName="apellido">
     </div>
 
     <div class="row">
-      <label for="dni" class="col-1"> Dni: </label> <input id="dni" class="col-3" type="text" formControlName="dni">
-      <label for="genero" class="col-1"> Genero: </label> <input id="genero" class="col-3" type="text" formControlName="genero">
+      <label for="dni" class="col-2"> Dni: </label> <input id="dni" class="col-3" type="text" formControlName="dni">
+      <label for="genero" class="col-2"> Genero: </label>
+      <select class="col-3" formControlName="genero" name="genero" id="genero">
+        <option *ngFor="let genero of generos" value="{{ genero.id }}"> {{ genero.descripcion }}</option>
+      </select>
     </div>
 
     <div class="row">
-      <label for="email" class="col-1"> email: </label> <input id="email" class="col-3" type="text" formControlName="email">
-      <label for="telefono" class="col-1"> Telefono: </label> <input id="telefono" class="col-3" type="text" formControlName="telefono">
+      <label for="email" class="col-2"> email: </label> <input id="email" class="col-3" type="text"
+        formControlName="email">
+      <label for="telefono" class="col-2"> Telefono: </label> <input id="telefono" class="col-3" type="text"
+        formControlName="telefono">
     </div>
 
     <div class="row">
-      <label class="col-1"> Apodo: </label> <input class="col-3" type="text" formControlName="apodo">
+      <label class="col-2"> Apodo: </label> <input class="col-3" type="text" formControlName="apodo">
     </div>
     <br>
     <div class="row">
@@ -25,5 +32,6 @@
       <button (click)="limpiarCampos()" class="col-2 offset-1 btn btn-danger">Borrar</button>
     </div>
 
+    Form: {{ curriculumForm.status }}
   </form>
 </div>

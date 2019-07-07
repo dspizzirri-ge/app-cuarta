@@ -8,14 +8,20 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 })
 export class DatosPersonalesComponent implements OnInit {
 
-  curriculumForm:FormGroup = new FormGroup({
-    nombre:new FormControl('', Validators.required),
-    apellido:new FormControl('', Validators.required),
+  generos: Array<any> = [
+    { id: 1, descripcion: "Masculino" },
+    { id: 2, descripcion: "Femenino" },
+    { id: 3, descripcion: "Otro" },
+  ]
+
+  curriculumForm: FormGroup = new FormGroup({
+    nombre: new FormControl('', Validators.required),
+    apellido: new FormControl('', Validators.required),
     dni: new FormControl('', [Validators.required, Validators.minLength(8), Validators.maxLength(9)]),
     genero: new FormControl('', Validators.required),
-    email: new FormControl('', Validators.required),
+    email: new FormControl('', [Validators.required, this.validarDominioMail]),
     telefono: new FormControl(''),
-    apodo: new FormControl('') 
+    apodo: new FormControl('')
   });
 
   constructor() { }
@@ -23,11 +29,17 @@ export class DatosPersonalesComponent implements OnInit {
   ngOnInit() {
   }
 
-  enviarCurriculum(){
-    console.log(this.curriculumForm.value);
+  enviarCurriculum() {
+    console.log(this.curriculumForm);
   }
 
-  limpiarCampos(){
-    this.curriculumForm.reset();
+  limpiarCampos() {
+    this.curriculumForm.reset({
+      nombre: '', apellido: '', dni: '', genero: '', email: '', telefono: '', apodo: ''
+    });
+  }
+
+  validarDominioMail(control: FormControl): { [s: string]: boolean } {
+    return control.value.includes("@gmail") ? null : { nogmail: true };
   }
 }
