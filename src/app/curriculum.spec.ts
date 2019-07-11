@@ -2,6 +2,7 @@ import { Curriculum } from './curriculum';
 
 describe('Curriculum', () => {
   it('should create an instance', () => {
-    expect(new Curriculum()).toBeTruthy();
+    const curriculum = new Curriculum("", "", "", "", "", null, null, new Array(), new Array())
+    expect(curriculum).toBeTruthy();
   });
 });
