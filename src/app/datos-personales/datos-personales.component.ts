@@ -16,13 +16,7 @@ export class DatosPersonalesComponent implements OnInit {
   ]
 
   curriculumForm: FormGroup = new FormGroup({
-    nombre: new FormControl('', Validators.required),
-    apellido: new FormControl('', Validators.required),
-    dni: new FormControl('', [Validators.required, Validators.minLength(8), Validators.maxLength(9)]),
-    genero: new FormControl('', Validators.required),
-    email: new FormControl('', [Validators.required, this.validarDominioMail]),
-    telefono: new FormControl('', Validators.pattern("[0-9]{7,10}")),
-    apodo: new FormControl('', [], [this.validarApodo])
+
   });
 
   constructor() { }
@@ -41,7 +35,7 @@ export class DatosPersonalesComponent implements OnInit {
   }
 
   validarDominioMail(control: FormControl): { [s: string]: boolean } {
-    return control.value.includes("@gmail") ? null : { nogmail: true };
+    return control? null : { nogmail: true };
   }
 
   validarApodo(control: FormControl): Promise<any> | Observable<any> {
