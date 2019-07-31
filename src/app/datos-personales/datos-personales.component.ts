@@ -42,7 +42,7 @@ export class DatosPersonalesComponent implements OnInit {
 
     let promesa = new Promise((resolve, reject) => {
       setTimeout(
-        () => control.value !== "tonto" ? resolve(null) : resolve({ apodoInvalido: true }), 2000
+        () => control.value !== "tonto" ? resolve(null) : reject({ apodoInvalido: true }), 2000
       )
     });
 
